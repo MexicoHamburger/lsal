@@ -57,7 +57,7 @@ function LoginPage() {
                     {/* 회원가입 링크 */}
                     <p className="text-gray-400 text-sm mt-4">
                         계정이 없으신가요?{" "}
-                        <Link to="/signup" className="text-blue-400 hover:underline">
+                        <Link to="/register" className="text-blue-400 hover:underline">
                             회원가입
                         </Link>
                     </p>
