@@ -1,23 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router";
-import PasswordStrengthIndicator from "@/components/passwordStrengthIndicator";
-import {
-    getPasswordStrengthMessage,
-    getSafetyLevel
-} from "@/utils/password";
+import PasswordStrengthIndicator from "@/components/PasswordStrengthIndicator";
+import Layout from "@/components/Layout";
 
 function RegisterPage() {
     const [id, setId] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
-    const [safetyLevel, setSafetyLevel] = useState(0);
-    const [strengthMessage, setStrengthMessage] = useState("");
-
-    useEffect(() => {
-        setSafetyLevel(getSafetyLevel(password));
-        setStrengthMessage(getPasswordStrengthMessage(password));
-    }, [password]);
 
     const isIdValid = (id: string): boolean => {
         const idRegex = /^.{4,16}$/;
@@ -35,7 +25,7 @@ function RegisterPage() {
     };
 
     return (
-        <div className="bg-gray-900 text-white min-h-screen flex flex-col">
+        <Layout>
             <main className="flex-1 flex items-center justify-center p-8">
                 <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-sm text-center">
                     <h1 className="text-2xl font-bold mb-6">회원가입</h1>
@@ -55,11 +45,7 @@ function RegisterPage() {
                             onChange={(e) => setPassword(e.target.value)}
                             className="p-3 rounded bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:bg-gray-600"
                         />
-                        <PasswordStrengthIndicator
-                            password={password}
-                            safetyLevel={safetyLevel}
-                            message={strengthMessage}
-                        />
+                        <PasswordStrengthIndicator password={password} />
                         <input
                             type="password"
                             placeholder="비밀번호 확인"
@@ -83,7 +69,7 @@ function RegisterPage() {
                     </p>
                 </div>
             </main>
-        </div>
+        </Layout>
     );
 }
 

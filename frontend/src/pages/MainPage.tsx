@@ -1,8 +1,9 @@
 import { Link } from "react-router";
+import Layout from "@/components/Layout";
 
 function MainPage() {
   return (
-    <div className="bg-gray-900 text-white min-h-screen flex flex-col">
+    <Layout>
       {/* Navbar */}
       <nav className="bg-gray-800 p-4 shadow-md flex justify-between items-center">
         ls -al
@@ -18,7 +19,7 @@ function MainPage() {
         Main Area <br />
         Maybe Something like an image, or something that shows how to use this page? <br />
       </main>
-    </div>
+    </Layout>
   );
 }
 

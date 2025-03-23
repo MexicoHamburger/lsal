@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router";
+import Layout from "@/components/Layout";
 
 function LoginPage() {
     const [id, setId] = useState("");
@@ -21,7 +22,7 @@ function LoginPage() {
     }
 
     return (
-        <div className="bg-gray-900 text-white min-h-screen flex flex-col">
+        <Layout>
             <main className="flex-1 flex items-center justify-center p-8">
                 <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-sm text-center">
                     <h1 className="text-2xl font-bold mb-6">lsal</h1>
@@ -63,7 +64,7 @@ function LoginPage() {
                     </p>
                 </div>
             </main>
-        </div>
+        </Layout>
     );
 }
 
