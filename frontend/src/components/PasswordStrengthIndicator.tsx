@@ -15,15 +15,18 @@ const strengthSvgMap: { [key: number]: string } = {
 
 interface Props {
   password: string;
+  onStrengthChange? : (isStrong : boolean) => void;
 }
 
-export default function PasswordStrengthIndicator({ password }: Props) {
+export default function PasswordStrengthIndicator({ password, onStrengthChange }: Props) {
   const [safetyLevel, setSafetyLevel] = useState(0);
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    setSafetyLevel(getSafetyLevel(password));
+    const level = getSafetyLevel(password);
+    setSafetyLevel(level);
     setMessage(getPasswordStrengthMessage(password));
+    onStrengthChange?.(level > 0);
   }, [password]);
 
   if (!password) return null;

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router";
 import PasswordStrengthIndicator from "@/components/PasswordStrengthIndicator";
+import IdErrorMessage from "@/components/IdErrorMessage";
 import Layout from "@/components/Layout";
 
 function RegisterPage() {
@@ -9,19 +10,21 @@ function RegisterPage() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
 
-    const isIdValid = (id: string): boolean => {
-        const idRegex = /^.{4,16}$/;
-        return idRegex.test(id);
-    };
+    const [isIdValid, setIsIdValid] = useState(false);
+    const [isPasswordStrongEnough, setIsPasswordStrongEnough] = useState(false);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (!id.trim()) return setError("아이디를 입력해주세요.");
-        if (!isIdValid(id)) return setError("id는 4 ~ 16자여야 합니다.");
         if (!password.trim()) return setError("비밀번호를 입력해주세요.");
         if (password !== confirmPassword) return setError("비밀번호가 일치하지 않습니다.");
         setError("");
-        console.log("회원가입 성공!");
+
+        console.log(isIdValid);
+        console.log(isPasswordStrongEnough);
+        if (isIdValid && isPasswordStrongEnough) {
+            console.log("회원가입 성공!");
+        }
     };
 
     return (
@@ -38,6 +41,7 @@ function RegisterPage() {
                             onChange={(e) => setId(e.target.value)}
                             className="p-3 rounded bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:bg-gray-600"
                         />
+                        <IdErrorMessage id={id} onValidityChange = {setIsIdValid} />
                         <input
                             type="password"
                             placeholder="비밀번호"
@@ -45,7 +49,7 @@ function RegisterPage() {
                             onChange={(e) => setPassword(e.target.value)}
                             className="p-3 rounded bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:bg-gray-600"
                         />
-                        <PasswordStrengthIndicator password={password} />
+                        <PasswordStrengthIndicator password={password} onStrengthChange = {setIsPasswordStrongEnough} />
                         <input
                             type="password"
                             placeholder="비밀번호 확인"
@@ -53,7 +57,7 @@ function RegisterPage() {
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             className="p-3 rounded bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:bg-gray-600"
                         />
-                        {error && <p className="text-red-500 text-sm">{error}</p>}
+                        {error && <p className="text-sm">{error}</p>}
                         <button
                             type="submit"
                             className="bg-blue-800 hover:bg-blue-900 cursor-pointer text-white font-bold py-2 px-4 rounded"
