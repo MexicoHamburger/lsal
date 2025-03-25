@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import PasswordStrengthIndicator from "@/components/PasswordStrengthIndicator";
 import IdErrorMessage from "@/components/IdErrorMessage";
 import Layout from "@/components/Layout";
 
 function RegisterPage() {
+    let navigate = useNavigate();
     const [id, setId] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -29,6 +30,7 @@ function RegisterPage() {
             };
             localStorage.setItem("registeredUser", JSON.stringify(user));
             /* 여기서 회원가입 성공 처리 */
+            navigate("/register/success");
         }
     };
 
