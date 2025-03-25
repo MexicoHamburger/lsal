@@ -23,7 +23,12 @@ function RegisterPage() {
         console.log(isIdValid);
         console.log(isPasswordStrongEnough);
         if (isIdValid && isPasswordStrongEnough) {
-            console.log("회원가입 성공!");
+            const user = {
+                id,
+                password,
+            };
+            localStorage.setItem("registeredUser", JSON.stringify(user));
+            /* 여기서 회원가입 성공 처리 */
         }
     };
 
