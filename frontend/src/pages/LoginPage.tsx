@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Layout from "@/components/Layout";
 
 function LoginPage() {
+    let navigate = useNavigate();
     const [id, setId] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -19,6 +20,9 @@ function LoginPage() {
             return;
         }
         setError("");
+        
+        {/* TODO : 로그인 검증 로직 */}
+        navigate(`/id/${id}`);
     }
 
     return (
