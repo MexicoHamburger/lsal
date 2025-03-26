@@ -22,7 +22,7 @@ function LoginPage() {
         setError("");
         
         {/* TODO : 로그인 검증 로직 */}
-        navigate(`/id/${id}`);
+        navigate(`/personal/${id}`);
     }
 
     return (
