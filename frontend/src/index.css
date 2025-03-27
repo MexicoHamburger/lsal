@@ -1,1 +1,8 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 @import "tailwindcss";
+
+@theme {
+    --font-*: initial;
+    --font-sans: "pretendard", serif;
+    
+}
