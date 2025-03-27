@@ -1,4 +1,4 @@
-// src/components/DynamicHistoryInput.tsx
+// src/components/DynamicCertInput.tsx
 import React, { useState } from 'react';
 
 interface CertItem {
@@ -29,13 +29,6 @@ const DynamicCertInput: React.FC = () => {
         <div className="space-y-2">
             {certList.map((item, idx) => (
                 <div key={idx} className="flex space-x-2 items-center">
-                    <input
-                        type="text"
-                        placeholder="취득 연도"
-                        value={item.year}
-                        onChange={(e) => updateCert(idx, 'year', e.target.value)}
-                        className="flex-[1] border px-3 py-2 rounded"
-                    />
                     <input
                         type="text"
                         placeholder="자격증 이름"
