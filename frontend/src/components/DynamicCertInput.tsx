@@ -39,7 +39,7 @@ const DynamicCertInput: React.FC = () => {
                     <button
                         type="button"
                         onClick={() => removeCert(idx)}
-                        className="text-red-400 hover:text-red-600 text-sm"
+                        className="text-red-400 hover:text-red-600 cursor-pointer text-sm"
                     >
                         삭제
                     </button>

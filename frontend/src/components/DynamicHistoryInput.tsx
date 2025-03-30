@@ -1,6 +1,7 @@
 // src/components/DynamicHistoryInput.tsx
 import React, { useState } from 'react';
 import DatePickerPopup from './DatePickerPopup';
+import xIcon from '@/assets/x.svg';
 
 interface HistoryItem {
     description: string;
@@ -34,10 +35,22 @@ const DynamicHistoryInput: React.FC = () => {
     return (
         <div className="space-y-2 relative">
             {historyList.map((item, idx) => (
-                <div key={idx} className="space-y-2 border p-4 rounded-md">
+                <div
+                    key={idx}
+                    className={`space-y-2 border p-4 rounded-md ${idx !== 0 ? 'mt-6' : ''}`}
+                >
                     {/* 이력 */}
                     <div className="space-y-1">
-                        <label className="text-sm text-white-600">이력</label>
+                        <div className="flex items-center justify-between">
+                            <label className="text-sm text-white-600">이력</label>
+                            <button
+                                type="button"
+                                onClick={() => removeHistory(idx)}
+                                className="text-red-400 hover:text-red-600 cursor-pointer text-sm"
+                            >
+                                삭제
+                            </button>
+                        </div>
                         <input
                             type="text"
                             placeholder="이력을 입력하세요"
@@ -46,6 +59,7 @@ const DynamicHistoryInput: React.FC = () => {
                             className="w-full border px-3 py-2 mt-2 rounded"
                         />
                     </div>
+
 
                     {/* 재직 기간 */}
                     <div className="space-y-1 relative">
@@ -91,17 +105,6 @@ const DynamicHistoryInput: React.FC = () => {
                                 )}
                             </div>
                         </div>
-                    </div>
-
-                    {/* 삭제 버튼 */}
-                    <div className="text-right">
-                        <button
-                            type="button"
-                            onClick={() => removeHistory(idx)}
-                            className="text-red-400 hover:text-red-600 text-sm"
-                        >
-                            삭제
-                        </button>
                     </div>
                 </div>
             ))}
