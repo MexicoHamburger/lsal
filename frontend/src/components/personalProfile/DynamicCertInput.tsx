@@ -1,5 +1,5 @@
 // src/components/DynamicCertInput.tsx
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 interface CertItem {
     year: string;
@@ -11,11 +11,21 @@ const DynamicCertInput: React.FC = () => {
         { year: '', description: '' },
     ]);
 
+    const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+
     const addCert = () => {
-        setCertList([...certList, { year: '', description: '' }]);
+        setCertList((prev) => {
+            const newList = [...prev, { year: '', description: '' }];
+            setTimeout(() => {
+                const lastIndex = newList.length - 1;
+                inputRefs.current[lastIndex]?.focus();
+            }, 0);
+            return newList;
+        });
     };
 
     const removeCert = (index: number) => {
+        if (certList.length === 1) return; // 최소 1개 보장
         setCertList(certList.filter((_, i) => i !== index));
     };
 
@@ -25,15 +35,24 @@ const DynamicCertInput: React.FC = () => {
         setCertList(newList);
     };
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            addCert();
+        }
+    };
+
     return (
-        <div className="space-y-2">
+        <div className="space-y-3">
             {certList.map((item, idx) => (
                 <div key={idx} className="flex space-x-2 items-center">
                     <input
+                        ref={(el) => {inputRefs.current[idx] = el}}
                         type="text"
-                        placeholder="자격증 이름"
+                        placeholder="보유한 자격증을 입력하세요. (Enter로 추가)"
                         value={item.description}
                         onChange={(e) => updateCert(idx, 'description', e.target.value)}
+                        onKeyDown={(e) => handleKeyDown(e, idx)}
                         className="flex-[3] border px-3 py-2 rounded"
                     />
                     <button
@@ -45,13 +64,6 @@ const DynamicCertInput: React.FC = () => {
                     </button>
                 </div>
             ))}
-            <button
-                type="button"
-                onClick={addCert}
-                className="text-blue-500 cursor-pointer hover:underline text-sm mt-2"
-            >
-                + 자격증 추가
-            </button>
         </div>
     );
 };

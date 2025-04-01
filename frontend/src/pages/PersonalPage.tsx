@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router";
 import Layout from "@/components/Layout";
-import PersonalInfoSections from "@/components/PersonalInfoSections";
+import PersonalInfoSections from "@/components/personalProfile/PersonalInfoSections";
 
 function PersonalPage() {
   const { userid } = useParams();

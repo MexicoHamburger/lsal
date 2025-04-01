@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import DatePickerPopup from './DatePickerPopup';
+import DatePickerPopup from '../DatePickerPopup';
 
 interface HistoryItem {
     description: string;
