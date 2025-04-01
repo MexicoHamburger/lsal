@@ -17,7 +17,7 @@
 
 ### Backend
 - **Spring Framework**  
-
+- **디테일 추가 요망**
 ---
 
 ## 개발 계획
