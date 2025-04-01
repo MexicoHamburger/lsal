@@ -7,14 +7,27 @@ interface DatePickerPopupProps {
     onClose: () => void;
 }
 
-export default function DatePickerPopup({ onClose, onConfirm }: DatePickerPopupProps) {
+function parseInitialDate(dateStr?: string) {
+    if (!dateStr) return getToday();
+  
+    const [year, month, day] = dateStr.split('-').map(Number);
+    return {
+      year,
+      month,
+      day,
+    };
+  }
+
+export default function DatePickerPopup({ onClose, onConfirm, initialDate }: DatePickerPopupProps) {
     const ref = useRef<HTMLDivElement>(null);
     const yearRefs = useRef<{ [key: number]: HTMLDivElement | null }>({});
-    const today = getToday();
 
-    const [selYear, setSelYear] = useState(today.year);
-    const [selMonth, setSelMonth] = useState(today.month);
-    const [selDay, setSelDay] = useState(today.day);
+    const parsed = parseInitialDate(initialDate);
+
+    const [selYear, setSelYear] = useState(parsed.year);
+    const [selMonth, setSelMonth] = useState(parsed.month);
+    const [selDay, setSelDay] = useState(parsed.day);
+    
     const [dayInfo, setDayInfo] = useState<CalendarDay[]>([]);
 
     const goPrevMonth = () => {
@@ -39,7 +52,7 @@ export default function DatePickerPopup({ onClose, onConfirm }: DatePickerPopupP
     }, [selMonth, selYear]);
 
     const years = Array.from(
-        { length: today.year - 1900 + 1 },
+        { length: getToday().year - 1900 + 1 },
         (_, i) => 1900 + i
     );
 
@@ -98,22 +111,70 @@ export default function DatePickerPopup({ onClose, onConfirm }: DatePickerPopupP
                     ))}
                 </div>
 
-                {/* 날짜 그리드 더미 */}
+                {/* 날짜 그리드 */}
                 <div className="grid grid-cols-7 gap-1 text-center text-sm mb-4">
-                    {dayInfo.map((item, i) => (
-                        <div
-                            key={i}
-                            className={`
-                            py-1 rounded cursor-pointer
-                            ${item.isCurrentMonth ? 'text-black hover:bg-blue-100' : 'text-gray-400 hover:bg-gray-100'}
-                            `}
-                            onClick={() => setSelDay(item.day)}
-                        >
-                            {item.day}
-                        </div>
-                    ))}
-                </div>
+                    {dayInfo.map((item, i) => {
+                        let year = selYear;
+                        let month = selMonth;
 
+                        if (item.isCurrentMonth === 0) {
+                            month = selMonth === 1 ? 12 : selMonth - 1;
+                            year = selMonth === 1 ? selYear - 1 : selYear;
+                        } else if (item.isCurrentMonth === 2) {
+                            month = selMonth === 12 ? 1 : selMonth + 1;
+                            year = selMonth === 12 ? selYear + 1 : selYear;
+                        }
+
+                        const isSelected =
+                            selYear === year && selMonth === month && selDay === item.day;
+
+                        return (
+                            <div
+                                key={i}
+                                className={`
+                                    py-1 rounded cursor-pointer
+                                    ${isSelected ? 'bg-blue-100' : ''}
+                                    ${item.isCurrentMonth === 1
+                                        ? 'text-black hover:bg-blue-100'
+                                        : 'text-gray-400 hover:bg-gray-100'}
+                                `}
+                                onClick={() => {
+                                    let newYear = selYear;
+                                    let newMonth = selMonth;
+
+                                    if (item.isCurrentMonth === 0) {
+                                        if (selMonth === 1) {
+                                            newYear = selYear - 1;
+                                            newMonth = 12;
+                                        } else {
+                                            newMonth = selMonth - 1;
+                                        }
+                                    }
+
+                                    if (item.isCurrentMonth === 2) {
+                                        if (selMonth === 12) {
+                                            newYear = selYear + 1;
+                                            newMonth = 1;
+                                        } else {
+                                            newMonth = selMonth + 1;
+                                        }
+                                    }
+
+                                    setSelYear(newYear);
+                                    setSelMonth(newMonth);
+                                    setSelDay(item.day);
+
+                                    const dateStr = `${newYear}-${String(newMonth).padStart(2, '0')}-${String(
+                                        item.day
+                                    ).padStart(2, '0')}`;
+                                    onConfirm(dateStr);
+                                }}
+                            >
+                                {item.day}
+                            </div>
+                        );
+                    })}
+                </div>
 
                 {/* 하단 버튼 */}
                 <div className="flex justify-end space-x-2">

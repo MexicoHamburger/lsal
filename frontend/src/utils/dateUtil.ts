@@ -1,6 +1,7 @@
 export type CalendarDay = {
   day: number;
-  isCurrentMonth: boolean;
+  isCurrentMonth: number;
+  // 0 -> prev month, 1 -> current month, 2 -> next month
 };
 
 export function getToday() {
@@ -35,16 +36,16 @@ export function getCalendarGrid(selYear: number, selMonth: number): CalendarDay[
     const result: CalendarDay[] = [];
   
     for (let i = firstDay - 1; i >= 0; i--) {
-      result.push({ day: prevLastDate - i, isCurrentMonth: false });
+      result.push({ day: prevLastDate - i, isCurrentMonth: 0 });
     }
   
     for (let i = 1; i <= lastDate; i++) {
-      result.push({ day: i, isCurrentMonth: true });
+      result.push({ day: i, isCurrentMonth: 1 });
     }
   
     const remaining = 42 - result.length;
     for (let i = 1; i <= remaining; i++) {
-      result.push({ day: i, isCurrentMonth: false });
+      result.push({ day: i, isCurrentMonth: 2 });
     }
   
     return result;
