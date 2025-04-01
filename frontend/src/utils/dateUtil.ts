@@ -1,7 +1,4 @@
-
-import { useEffect, useState } from "react";
-
-type CalendarDay = {
+export type CalendarDay = {
   day: number;
   isCurrentMonth: boolean;
 };
@@ -29,45 +26,28 @@ function getMonthInfo(year: number, month: number) {
     };
 }
 
-export function getCalendarGrid(selYear: number, selMonth: number) {
-  const [calendarDays, setCalendarDays] = useState<CalendarDay[]>([]);
-
-  useEffect(() => {
+export function getCalendarGrid(selYear: number, selMonth: number): CalendarDay[] {
     const monthInfo = getMonthInfo(selYear, selMonth);
     const firstDay = monthInfo.startDayOfWeek;
     const lastDate = monthInfo.curMonthLastDate;
     const prevLastDate = monthInfo.prevMonthLastDate;
-
+  
     const result: CalendarDay[] = [];
-
-    // 👉 1. 앞부분: 이전 달 날짜들
+  
     for (let i = firstDay - 1; i >= 0; i--) {
-      result.push({
-        day: prevLastDate - i,
-        isCurrentMonth: false,
-      });
+      result.push({ day: prevLastDate - i, isCurrentMonth: false });
     }
-
-    // 👉 2. 현재 달 날짜들
+  
     for (let i = 1; i <= lastDate; i++) {
-      result.push({
-        day: i,
-        isCurrentMonth: true,
-      });
+      result.push({ day: i, isCurrentMonth: true });
     }
-
-    // 👉 3. 뒷부분: 다음 달 날짜들
+  
     const remaining = 42 - result.length;
     for (let i = 1; i <= remaining; i++) {
-      result.push({
-        day: i,
-        isCurrentMonth: false,
-      });
+      result.push({ day: i, isCurrentMonth: false });
     }
-
-    setCalendarDays(result);
-  }, [selYear, selMonth]);
-
-  return calendarDays;
-}
+  
+    return result;
+  }
+  
 

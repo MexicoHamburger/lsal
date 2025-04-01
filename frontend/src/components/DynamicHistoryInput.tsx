@@ -1,7 +1,5 @@
-// src/components/DynamicHistoryInput.tsx
 import React, { useState } from 'react';
 import DatePickerPopup from './DatePickerPopup';
-import xIcon from '@/assets/x.svg';
 
 interface HistoryItem {
     description: string;
