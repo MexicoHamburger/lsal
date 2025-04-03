@@ -11,33 +11,58 @@ const dummyProjects = [
         id:"project-1",
         thumbnailUrl: "/src/assets/apple.svg",
     },
+    {
+        id:"dummy-1",
+        thumbnailUrl: "/src/assets/empty.svg",
+    },
+    {
+        id:"dummy-2",
+        thumbnailUrl: "/src/assets/empty.svg",
+    },
 ];
+
 export default function PersonalProjectSections() {
     const [projectList, setProjectList] = useState(dummyProjects);
+    const [showLimitMsg, setShowLimitMsg] = useState(false);
 
     const addProject = () => {
-      const newProject = {
-        id: `project-${Date.now()}`,
-        thumbnailUrl: "/src/assets/empty.svg",
-      };
-      setProjectList((prev) => [...prev, newProject]);
+        if (projectList.length >= 8) {
+            setShowLimitMsg(true);
+            return;
+        }
+        const newProject = {
+            id: `project-${Date.now()}`,
+            thumbnailUrl: "/src/assets/empty.svg",
+        };
+        setProjectList((prev) => [...prev, newProject]);
+        setShowLimitMsg(false);
     };
 
-    const displayCards = [...projectList].slice(0, 3);
-    while (displayCards.length < 3) {
-      displayCards.push({ ...dummyCard, id: `dummy-${displayCards.length}` });
-    }
+    const displayList =
+        projectList.length < 3
+            ? [
+                  ...projectList,
+                  ...Array(3 - projectList.length)
+                      .fill(dummyCard)
+                      .map((card) => ({ ...card, id: Date.now() + Math.random() })),
+              ]
+            : projectList;
 
     return (
         <>
-            <button
-                type="button"
-                onClick={addProject}
-                className="text-blue-500 cursor-pointer hover:underline text-sm pb-2"
-            >
-                + 프로젝트 추가
-            </button>
-            <CardMotion cards = {[...displayCards].reverse()} />
+            <div className="flex items-center gap-2 pb-2">
+                <button
+                    type="button"
+                    onClick={addProject}
+                    className="text-blue-500 cursor-pointer hover:underline text-sm"
+                >
+                    + 프로젝트 추가
+                </button>
+                {showLimitMsg && (
+                    <p className="text-red-500 px-4 text-sm">프로젝트는 최대 8개까지 가능합니다.</p>
+                )}
+            </div>
+            <CardMotion cards={[...displayList].reverse()} />
         </>
     );
-}
+} 
