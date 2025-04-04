@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -21,6 +22,7 @@ import java.util.Optional;
 public class AuthController {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder; // 비밀번호 암호화 추가
 
     @Operation(summary = "아이디 중복확인 API", description = "아이디 중복 여부 확인 (중복 시 400 응답)")
     @ApiResponse(responseCode = "200", description = "사용 가능한 아이디",
@@ -63,9 +65,10 @@ public class AuthController {
                             .data(null)
                             .build());
         }
+
         User user = User.builder()
                 .userid(request.getUserid())
-                .password(request.getPassword())  // 비밀번호는 암호화 필요!
+                .password(passwordEncoder.encode(request.getPassword())) // 암호화 적용
                 .build();
 
         User savedUser = userRepository.save(user);
@@ -87,7 +90,8 @@ public class AuthController {
     public ResponseEntity<ApiResponseCustom<User>> login(@RequestBody AuthRequest request) {
         Optional<User> optionalUser = userRepository.findByUserid(request.getUserid());
 
-        if (optionalUser.isPresent() && optionalUser.get().getPassword().equals(request.getPassword())) {
+        if (optionalUser.isPresent() && 
+            passwordEncoder.matches(request.getPassword(), optionalUser.get().getPassword())) { // 암호화 검증
             User user = optionalUser.get();
             user.setPassword(null);
             return ResponseEntity.ok(ApiResponseCustom.<User>builder()
