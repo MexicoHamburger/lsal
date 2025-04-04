@@ -16,8 +16,10 @@
 - **Vite 개발 환경**
 
 ### Backend
-- **Spring Framework**  
-- **디테일 추가 요망**
+- **Spring Boot Framework**  
+- **Java 17**
+- **MySQL**
+- **Swagger UI 활용**
 ---
 
 ## 개발 계획
