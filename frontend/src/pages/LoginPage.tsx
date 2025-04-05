@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate, useRevalidator } from "react-router";
 import Layout from "@/components/Layout";
 
 function LoginPage() {
@@ -8,7 +8,7 @@ function LoginPage() {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if (!id.trim()) {
@@ -21,8 +21,23 @@ function LoginPage() {
         }
         setError("");
         
-        {/* TODO : 로그인 검증 로직 */}
-        navigate(`/personal/${id}`);
+        try {
+            const response = await fetch("/api/auth/login", {
+                method:"POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({userid: id, password: password}),
+            });
+
+            if (!response.ok) {
+                throw new Error("로그인 실패");
+            }
+            navigate(`/personal/${id}`);
+        } catch (error) {
+            setError("아이디 혹은 비밀번호가 틀렸습니다.");
+            return;
+        }
     }
 
     return (

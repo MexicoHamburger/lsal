@@ -14,23 +14,34 @@ function RegisterPage() {
     const [isIdValid, setIsIdValid] = useState(false);
     const [isPasswordStrongEnough, setIsPasswordStrongEnough] = useState(false);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!id.trim()) return setError("아이디를 입력해주세요.");
         if (!password.trim()) return setError("비밀번호를 입력해주세요.");
         if (password !== confirmPassword) return setError("비밀번호가 일치하지 않습니다.");
         setError("");
 
-        console.log(isIdValid);
-        console.log(isPasswordStrongEnough);
         if (isIdValid && isPasswordStrongEnough) {
             const user = {
                 id,
                 password,
             };
-            localStorage.setItem("registeredUser", JSON.stringify(user));
-            /* 여기서 회원가입 성공 처리 */
-            navigate("/register/success");
+            try {
+                const response = await fetch("/api/auth/signup", {
+                    method:"POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({userid: user.id, password: user.password}),
+                });
+
+                if (!response.ok) {
+                    throw new Error("회원가입 실패");
+                }
+                navigate("/register/success");
+            } catch (error) {
+                console.error("error occurred while register", error);
+            }
         }
     };
 
