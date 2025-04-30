@@ -19,6 +19,15 @@ function PersonalPage() {
     }, 1500);
   };
 
+  const saveProjectInfo = () => {
+    // save logic here
+
+    setShowToast(true);
+    setTimeout(() => {
+      setShowToast(false);
+    }, 1500);
+  };
+
   return (
     <Layout>
       <div className="flex-col px-[20%] pt-[5%] space-y-8">
@@ -28,7 +37,7 @@ function PersonalPage() {
           <div className="flex justify-end">
             <button
               type="button"
-              className="bg-blue-700 hover:bg-blue-800 text-white font-semibold py-2 px-4 rounded-md"
+              className="bg-blue-700 hover:bg-blue-800 text-white font-semibold py-2 px-4 rounded-md cursor-pointer"
               onClick={savePersonalInfo}
             >
               저장하기
@@ -38,6 +47,15 @@ function PersonalPage() {
         <div className="w-full p-4 space-y-4 border rounded-2xl">
           <p className="text-sm">개인 프로젝트 관리</p>
           <PersonalProjectSections />
+          <div className="flex justify-end">
+            <button
+              type="button"
+              className="bg-blue-700 hover:bg-blue-800 text-white font-semibold py-2 px-4 rounded-md cursor-pointer"
+              onClick={saveProjectInfo}
+            >
+              저장하기
+            </button>
+          </div>
         </div>
         <footer className="footer" />
       </div>
