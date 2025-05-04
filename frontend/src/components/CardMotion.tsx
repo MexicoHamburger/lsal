@@ -8,11 +8,12 @@ interface CardData {
 
 interface CardMotionProps {
   cards: CardData[];
+  onCardClick?: (id: string) => void;
 }
 
 const MAX_VISIBLE = 3;
 
-export default function CardMotion({ cards }: CardMotionProps) {
+export default function CardMotion({ cards, onCardClick }: CardMotionProps) {
   const [hovered, setHovered] = useState(false);
 
   const baseX = (MAX_VISIBLE - 1) * 6;
@@ -67,6 +68,7 @@ export default function CardMotion({ cards }: CardMotionProps) {
             initial={false}
             animate={{ x, y, rotate, scale, zIndex }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            onClick={() => onCardClick?.(card.id)}
           />
         );
       })}

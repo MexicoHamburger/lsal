@@ -46,7 +46,7 @@ function PersonalPage() {
         </div>
         <div className="w-full p-4 space-y-4 border rounded-2xl">
           <p className="text-sm">개인 프로젝트 관리</p>
-          <PersonalProjectSections />
+          <PersonalProjectSections userid={userid}/>
           <div className="flex justify-end">
             <button
               type="button"
