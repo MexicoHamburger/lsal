@@ -81,8 +81,8 @@ function MainPage() {
         >
           {Array.from({ length: 5 }).map((_, idx) => (
             <SwiperSlide key={idx}>
-              <div className="min-w-[300px] h-[280px] bg-gray-700 rounded-2xl p-6 shadow-lg hover:bg-gray-600 transition duration-200 cursor-pointer flex flex-col justify-between">
-                <div className="w-full h-40 bg-gray-500 rounded-xl mb-4" />
+              <div className="min-w-[300px] aspect-[3/2] bg-gray-700 rounded-2xl p-6 shadow-lg hover:bg-gray-600 transition duration-200 cursor-pointer flex flex-col justify-between">
+                <div className="w-full h-4/5 bg-gray-500 rounded-xl mb-4" />
                 <div>
                   <h3 className="text-white text-xl font-semibold mb-1">사용자 {idx + 1}</h3>
                   <p className="text-sm text-gray-300 line-clamp-2">
