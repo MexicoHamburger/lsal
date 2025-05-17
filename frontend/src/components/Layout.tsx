@@ -7,12 +7,11 @@ type LayoutProps = {
 const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="bg-gray-900 text-white min-h-screen flex flex-col">
-      <div>{children}</div>
+      {children}
       <footer className="bg-gray-800 text-gray-400 text-sm mt-4 py-4 text-center">
         © 2025 ls -al. All rights reserved.
       </footer>
     </div>
-
   );
 };
 
