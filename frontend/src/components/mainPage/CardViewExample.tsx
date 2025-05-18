@@ -11,7 +11,7 @@ interface Props {
 export default function CardViewExample({ autoplayEnabled }: Props) {
   return (
     <section className="w-full px-8 mt-16">
-      <h2 className="text-2xl font-bold text-white mb-4">다른 사람들의 포트폴리오 확인하기</h2>
+      <h2 className="text-white-bold text-2xl mb-4">다른 사람들의 포트폴리오 확인하기</h2>
 
       <Swiper
         key={autoplayEnabled ? "autoplay" : "static"}
@@ -32,10 +32,10 @@ export default function CardViewExample({ autoplayEnabled }: Props) {
       >
         {Array.from({ length: 5 }).map((_, idx) => (
           <SwiperSlide key={idx}>
-            <div className="min-w-[300px] aspect-[3/2] bg-gray-700 rounded-2xl p-6 shadow-lg hover:bg-gray-600 transition duration-200 cursor-pointer flex flex-col justify-between">
-              <div className="w-full h-4/5 bg-gray-500 rounded-xl mb-4" />
+            <div className="flex flex-col justify-between border-gray card-gray-hv cursor-pointer transition duration-200 min-w-[300px] aspect-[3/2] p-6">
+              <div className="w-full h-4/5 card-lightgray mb-4" />
               <div>
-                <h3 className="text-white text-xl font-semibold mb-1">사용자 {idx + 1}</h3>
+                <h3 className="text-white-bold text-xl mb-1">사용자 {idx + 1}</h3>
                 <p className="text-sm text-gray-300 line-clamp-2">
                   포트폴리오 소개 요약입니다. 간단한 설명이나 태그를 표시할 수 있어요.
                 </p>

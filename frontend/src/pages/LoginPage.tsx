@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate, useRevalidator } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Layout from "@/components/Layout";
 
 function LoginPage() {
@@ -42,9 +42,9 @@ function LoginPage() {
 
     return (
         <Layout>
-            <main className="flex-1 flex items-center justify-center p-8">
-                <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-sm text-center">
-                    <h1 className="text-2xl font-bold mb-6">lsal</h1>
+            <main className="flex-1 flex-row-center p-8">
+                <div className="card-gray shadow-lg text-center w-full max-w-sm p-8">
+                    <h1 className="text-white-bold text-2xl mb-6">lsal</h1>
 
                     {/* 로그인 폼 */}
                     <form
@@ -53,13 +53,13 @@ function LoginPage() {
                         <input
                             type="text"
                             placeholder="아이디"
-                            className="p-3 rounded bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:bg-gray-600"
+                            className="input-gray"
                             onChange={(e) => setId(e.target.value)}
                         />
                         <input
                             type="password"
                             placeholder="비밀번호"
-                            className="p-3 rounded bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:bg-gray-600"
+                            className="input-gray"
                             onChange={(e) => setPassword(e.target.value)}
                         />
 
@@ -68,7 +68,7 @@ function LoginPage() {
 
                         <button
                             type="submit"
-                            className="bg-blue-800 hover:bg-blue-900 cursor-pointer text-white font-bold py-2 px-4 rounded"
+                            className="card-blue-hv cursor-pointer text-white-bold py-2 px-4"
                         >
                             로그인
                         </button>

@@ -69,8 +69,8 @@ function RegisterPage() {
 
     return (
         <Layout>
-            <main className="flex-1 flex items-center justify-center p-8">
-                <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-lg text-center">
+            <main className="flex-1 flex-row-center p-8">
+                <div className="card-gray text-center w-full max-w-lg p-8">
                     <h1 className="text-2xl font-bold mb-6">회원가입</h1>
 
                     <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
@@ -84,12 +84,12 @@ function RegisterPage() {
                                     setId(e.target.value);
                                     setIsIdCheckPassed(null);
                                 }}
-                                className="flex-1 p-3 rounded bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:bg-gray-600"
+                                className="flex-1 input-gray"
                             />
                             <button
                                 type="button"
                                 onClick={handleCheckIdDuplicate}
-                                className={`w-28 px-3 py-2 text-white rounded transition-colors duration-200
+                                className={`text-white rounded transition-colors duration-200 px-3 py-2 w-28
                                     ${
                                         isIdCheckPassed === null
                                             ? "bg-gray-600 hover:bg-gray-700"
@@ -109,7 +109,7 @@ function RegisterPage() {
                             placeholder="비밀번호"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="p-3 rounded bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:bg-gray-600"
+                            className="input-gray"
                         />
                         <PasswordStrengthIndicator
                             password={password}
@@ -122,7 +122,7 @@ function RegisterPage() {
                             placeholder="비밀번호 확인"
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
-                            className="p-3 rounded bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:bg-gray-600"
+                            className="input-gray"
                         />
 
                         {/* 에러 메시지 */}
@@ -131,7 +131,7 @@ function RegisterPage() {
                         {/* 제출 버튼 */}
                         <button
                             type="submit"
-                            className="bg-blue-800 hover:bg-blue-900 cursor-pointer text-white font-bold py-2 px-4 rounded"
+                            className="card-blue-hv cursor-pointer text-white-bold px-4 py-2"
                         >
                             회원가입
                         </button>
