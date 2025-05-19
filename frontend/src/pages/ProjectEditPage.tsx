@@ -13,9 +13,12 @@ function ProjectEditPage() {
         <Layout>
             <div className="flex justify-center px-12 py-12">
                 <div className="w-full max-w-screen-lg space-y-6">
-                    <h1 className="text-white-bold text-3xl">
-                        프로젝트 수정: <span className="text-blue-400">{projectid}</span>
-                    </h1>
+                    <div className="flex justify-between">
+                        <h1 className="text-white-bold text-3xl">
+                            프로젝트 수정: <span className="text-blue-400">{projectid}</span>
+                        </h1>
+                        <div className="card-blue-hv cursor-pointer text-white-bold py-2 px-4">저장하기</div>
+                    </div>
                     <div className="space-y-2">
                         <label className="text-white-bold block">프로젝트 제목</label>
                         <input
